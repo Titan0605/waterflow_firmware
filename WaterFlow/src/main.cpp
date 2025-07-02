@@ -13,10 +13,8 @@ PollingServoModule pollMod(SERVER_URL, "");
 void setup() {
   Serial.begin(115200);
 
-  // 1) Emparejamiento y registro
   wifiMod.begin();
   
-  // 2) Configura módulo de polling con la MAC recién obtenida
   String mac = wifiMod.getMAC();
   pollMod = PollingServoModule(SERVER_URL, mac.c_str());
   pollMod.begin(SERVO_PIN, POLL_MS);
