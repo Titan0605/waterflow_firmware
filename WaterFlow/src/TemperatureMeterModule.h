@@ -12,7 +12,6 @@ class TemperatureMeterModule {
     bool sendTemperature();
     bool checkTempClose();
     void sendCommand();
-
     const char*        _serverUrl;
     String             _mac;
     OneWire            _tempSensor;
