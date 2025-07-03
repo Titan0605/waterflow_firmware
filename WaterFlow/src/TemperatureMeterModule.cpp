@@ -79,7 +79,7 @@ bool TemperatureMeterModule::checkTempClose(){
         return true;
       }
       Serial.println("Autoclose not needed");
-      return false;
+      return true;
     }
     Serial.println("JSON parse error");
     return false;
