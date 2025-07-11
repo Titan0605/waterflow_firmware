@@ -6,13 +6,14 @@ PollingServoModule::PollingServoModule(const char* serverUrl, const char* mac)
  : _serverUrl(serverUrl), _mac(mac), _interval(5000), _lastPoll(0), _lastState(false) {}
 
 void PollingServoModule::begin(int servoPin, unsigned long intervalMs) {
-  _servo.attach(servoPin);
+  _servoPin = servoPin;
+  pinMode(_servoPin, OUTPUT);
   _interval = intervalMs;
   if (this->getState()) {
-      _servo.write(90);
+      digitalWrite(_servoPin, HIGH);
       Serial.println("Valv activated");
     } else {
-      _servo.write(0);
+      digitalWrite(_servoPin, LOW);
       Serial.println("Valc closed");
     }
 }
@@ -30,10 +31,10 @@ void PollingServoModule::handle() {
   if (currentState != _lastState) {
     _lastState = currentState;
     if (currentState) {
-      _servo.write(90);
+      digitalWrite(_servoPin, HIGH);
       Serial.println("Valv activated");
     } else {
-      _servo.write(0);
+      digitalWrite(_servoPin, LOW);
       Serial.println("Valc closed");
     }
   } 

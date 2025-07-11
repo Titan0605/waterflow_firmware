@@ -1,5 +1,4 @@
 #pragma once
-#include <ESP32Servo.h>
 #include <ArduinoJson.h>
 
 class PollingServoModule {
@@ -11,7 +10,7 @@ class PollingServoModule {
   private:
     const char*    _serverUrl;
     String         _mac;
-    Servo          _servo;
+    int            _servoPin;
     unsigned long  _interval;
     unsigned long  _lastPoll;
     bool           _lastState = false; 
