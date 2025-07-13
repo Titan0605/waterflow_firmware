@@ -14,11 +14,19 @@ TemperatureMeterModule::TemperatureMeterModule(const char* serverUrl, const char
 {}
 
 void TemperatureMeterModule::begin(unsigned long intervalMs){
+  /*
+    It begins the interval between the temperature lectures and starts the sensor object (temperature sensor)
+    Args:
+    intervalMs (unsigned long): This is for stablishing how much time is going to wait every lecture
+  */
   _sensor.begin(); 
   _interval = intervalMs;
 }
 
 void TemperatureMeterModule::handle(){
+  /*
+    This is only for being called in the main
+  */
   unsigned long now = millis();
   if (now - _lastLecture < _interval) return;
   _lastLecture = now;
@@ -33,6 +41,9 @@ void TemperatureMeterModule::handle(){
 }
 
 bool TemperatureMeterModule::sendTemperature(){
+  /*
+    This function is for taking the temperature and after that it sends the information through the server 
+  */
   HTTPClient http;
   String url = String(_serverUrl) + "/send-temperature";
   http.begin(url);
@@ -59,6 +70,9 @@ bool TemperatureMeterModule::sendTemperature(){
 }
 
 bool TemperatureMeterModule::checkTempClose(){
+  /*
+    After sending the temperature, it checks if the temperature stablished by the user is less than the current temperature and if the user wants to close it with that situation. If both are true, then it closes the servo
+  */
   HTTPClient http;
   String url = String(_serverUrl) + "/get-temperature-waterflow?mac_address=" + _mac;
   http.begin(url);
@@ -90,6 +104,9 @@ bool TemperatureMeterModule::checkTempClose(){
 }
 
 void TemperatureMeterModule::sendCommand(){
+  /*
+    this function is for sending the json to the server for closing the servo
+  */
   HTTPClient http;
   String url = String(_serverUrl) + "/send-command";
   http.begin(url);

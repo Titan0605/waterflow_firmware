@@ -7,14 +7,14 @@ WiFiManagerModule::WiFiManagerModule(const char* serverUrl)
 void WiFiManagerModule::begin() {
   Serial.println("Matching Wi-Fi...");
 
-  // 1) Campo extra para el token
+  // Extra field in the form
   WiFiManagerParameter custom_token("token", "Match code", "", 40);
 
-  // 2) Configuramos WiFiManager
+  // Wifimanager configuration
   WiFiManager wm;
   wm.addParameter(&custom_token);
 
-  // 3) Inyectamos CSS en el <head> del portal
+  // Inyecting CSS
   wm.setCustomHeadElement(
     "<style>"
       "body { font-family: Arial, sans-serif; background: #f0f8ff; }"
@@ -26,7 +26,7 @@ void WiFiManagerModule::begin() {
     "</style>"
   );
 
-  // 4) Lanzamos portal cautivo
+  // Open the portal
   if (!wm.autoConnect("WaterFlow_Setup")) {
     Serial.println("Wi-Fi error, rebooting...");
     wm.resetSettings();
@@ -34,12 +34,12 @@ void WiFiManagerModule::begin() {
     ESP.restart();
   }
 
-  // 5) Obtenemos el token ingresado
+  // Takes the token sent by the user
   Serial.println("Conecting to WiFi.");
   _pairingToken = custom_token.getValue();
   Serial.printf("Token received: %s\n", _pairingToken.c_str());
 
-  // 6) Enviamos al servidor Flask para validar y emparejar
+  // It sends the information to the Cleanlyfe (waterflow) server 
   if(!this->getIsInDatabase()){
     HTTPClient http;
     String url = String(_serverUrl) + "/send-token";
@@ -51,9 +51,9 @@ void WiFiManagerModule::begin() {
     int code = http.POST(body);
     if (code == HTTP_CODE_CREATED) {
       String payload = http.getString();
-      http.end();  // liberar antes del parseo
+      http.end();
 
-      // Parsear JSON de respuesta
+      // Parsing json response
       StaticJsonDocument<201> doc;
       auto err = deserializeJson(doc, payload);
       if (err) {
@@ -66,7 +66,7 @@ void WiFiManagerModule::begin() {
 
     } else {
       Serial.printf("HTTP error %d, rebooting...\n", code);
-      http.end();  // liberar antes de reiniciar
+      http.end(); 
       wm.resetSettings();
       delay(2000);
       ESP.restart();

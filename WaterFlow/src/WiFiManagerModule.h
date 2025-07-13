@@ -7,9 +7,9 @@
 class WiFiManagerModule {
   public:
     WiFiManagerModule(const char* serverUrl);
-    void begin();                // Empareja y conecta Wi-Fi
-    String getPairingToken();    // Recupera el token que ingresó el usuario
-    String getMAC();             // Devuelve la MAC
+    void begin();                
+    String getPairingToken();   
+    String getMAC();             
     bool getIsInDatabase();
   private:
     const char* _serverUrl;
