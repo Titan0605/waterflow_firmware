@@ -71,7 +71,7 @@ bool TemperatureMeterModule::sendTemperature(){
 
 bool TemperatureMeterModule::checkTempClose(){
   /*
-    After sending the temperature, it checks if the temperature stablished by the user is less than the current temperature and if the user wants to close it with that situation. If both are true, then it closes the servo
+    After sending the temperature, it checks if the temperature stablished by the user is less than the current temperature and if the user wants to close it with that situation. If both are true, then it closes the servo, sending to the database the instruction and then the pollingServoModule will read the state change
   */
   HTTPClient http;
   String url = String(_serverUrl) + "/get-temperature-waterflow?mac_address=" + _mac;
