@@ -4,7 +4,7 @@
 #include "PollingServoModule.h"
 #include "TemperatureMeterModule.h"
 
-const char* SERVER_URL = "https://00ts5pkz-3000.usw3.devtunnels.ms/waterflow";
+const char* SERVER_URL = "https://cleanlyfe-production.up.railway.app/waterflow";
 const int   SERVO_PIN  = 23;
 const int   POLL_MS    = 5000;
 const int   TEMP_PIN     = 32;       
