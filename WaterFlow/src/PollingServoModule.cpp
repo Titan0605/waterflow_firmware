@@ -3,7 +3,7 @@
 #include <HTTPClient.h>
 
 PollingServoModule::PollingServoModule(const char* serverUrl, const char* mac)
- : _serverUrl(serverUrl), _mac(mac), _interval(5000), _lastPoll(0), _lastState(false) {}
+ : _serverUrl(serverUrl), _mac(mac), _interval(3000), _lastPoll(0), _lastState(false) {}
 
 void PollingServoModule::begin(int servoPin, unsigned long intervalMs) {
   /*
